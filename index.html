@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الفضاء اليوم</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        space: {
+                            dark: '#0f172a',
+                            blue: '#1e40af',
+                            star: '#fbbf24'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Arial', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-space-dark text-white min-h-screen font-sans">
+    <div class="container mx-auto px-4 py-6">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-6xl font-bold text-space-star mb-4">الفضاء اليوم</h1>
+            <p class="text-xl text-blue-200">اكتشف عجائب الكون من خلال بث حي مباشر من محطة الفضاء الدولية</p>
+            <div class="w-24 h-1 bg-space-star mx-auto mt-4"></div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Live Map Section -->
+            <div class="lg:col-span-2">
+                <div class="bg-space-blue/30 backdrop-blur-sm rounded-xl p-6 border border-space-blue/50">
+                    <h2 class="text-2xl font-bold mb-4 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382v-10.764a1 1 0 00-.553-.894L15 7" />
+                        </svg>
+                        تتبع مباشر لمحطة الفضاء الدولية
+                    </h2>
+                    <p class="text-blue-100 mb-4">تابع مسار محطة الفضاء الدولية في الوقت الحقيقي</p>
+                    <div class="bg-black rounded-lg overflow-hidden shadow-2xl">
+                        <iframe 
+                            src="https://www.n2yo.com/" 
+                            width="100%" 
+                            height="500" 
+                            frameborder="0" 
+                            allowfullscreen
+                            class="w-full h-96 md:h-[500px]">
+                        </iframe>
+                    </div>
+                    <p class="text-sm text-blue-200 mt-2 text-center">المصدر: n2yo.com - تتبع الأقمار الصناعية والمحطات الفضائية</p>
+                </div>
+            </div>
+
+            <!-- Live Videos Section -->
+            <div class="space-y-6">
+                <div class="bg-space-blue/30 backdrop-blur-sm rounded-xl p-6 border border-space-blue/50">
+                    <h2 class="text-2xl font-bold mb-4 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        بث حي من الفضاء
+                    </h2>
+                    <p class="text-blue-100 mb-4">شاهد الأرض من محطة الفضاء الدولية</p>
+                </div>
+
+                <!-- Video 1 -->
+                <div class="bg-space-blue/30 backdrop-blur-sm rounded-xl p-4 border border-space-blue/50">
+                    <h3 class="text-lg font-semibold mb-3 flex items-center">
+                        <span class="w-2 h-2 bg-space-star rounded-full ml-2"></span>
+                        البث الحي 1
+                    </h3>
+                    <div class="aspect-video bg-black rounded-lg overflow-hidden shadow-lg">
+                        <iframe 
+                            src="https://www.youtube.com/embed/DIgkvm2nmHc?autoplay=1&mute=1&loop=1&playlist=DIgkvm2nmHc&controls=1" 
+                            width="100%" 
+                            height="100%" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            class="w-full h-full">
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- Video 2 -->
+                <div class="bg-space-blue/30 backdrop-blur-sm rounded-xl p-4 border border-space-blue/50">
+                    <h3 class="text-lg font-semibold mb-3 flex items-center">
+                        <span class="w-2 h-2 bg-space-star rounded-full ml-2"></span>
+                        البث الحي 2
+                    </h3>
+                    <div class="aspect-video bg-black rounded-lg overflow-hidden shadow-lg">
+                        <iframe 
+                            src="https://www.youtube.com/embed/H999s0P1Er0?autoplay=1&mute=1&loop=1&playlist=H999s0P1Er0&controls=1" 
+                            width="100%" 
+                            height="100%" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            class="w-full h-full">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- News Section -->
+        <section class="mt-8">
+            <div class="bg-space-blue/20 backdrop-blur-sm rounded-xl p-6 border border-space-blue/40">
+                <h2 class="text-2xl font-bold mb-4 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                    </svg>
+                    آخر أخبار الفضاء
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+                    <div class="bg-black/40 rounded-lg p-4 border border-space-blue/30">
+                        <h3 class="font-semibold text-space-star mb-2">إطلاق صاروخ إلكترون</h3>
+                        <p class="text-sm text-blue-100">أطلقت شركة Rocket Lab قمرًا صناعيًا راداريًا يابانيًا من نيوزيلندا في 5 أغسطس.</p>
+                        <span class="text-xs text-blue-300 mt-2 block">مصدر: Space.com</span>
+                    </div>
+                    <div class="bg-black/40 rounded-lg p-4 border border-space-blue/30">
+                        <h3 class="font-semibold text-space-star mb-2">مهمة Crew-11</h3>
+                        <p class="text-sm text-blue-100">وصل أفراد بعثة Crew-11 إلى المحطة الفضائية الدولية بعد إطلاق ناجح بواسطة صاروخ فالكون 9.</p>
+                        <span class="text-xs text-blue-300 mt-2 block">مصدر: Space.com</span>
+                    </div>
+                    <div class="bg-black/40 rounded-lg p-4 border border-space-blue/30">
+                        <h3 class="font-semibold text-space-star mb-2">قمر نيسار المشترك</h3>
+                        <p class="text-sm text-blue-100">تم إطلاق قمر نيسار المشترك بين ناسا والهند لرصد التغيرات الدقيقة على سطح الأرض.</p>
+                        <span class="text-xs text-blue-300 mt-2 block">مصدر: NASA</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center mt-12 text-blue-200">
+            <div class="border-t border-space-blue/30 pt-6">
+                <p>الفضاء اليوم &copy; 2024 - منصة لمتابعة أحداث الفضاء في الوقت الحقيقي</p>
+                <p class="text-sm mt-2">المصادر: n2yo.com | NASA | YouTube</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
+```
