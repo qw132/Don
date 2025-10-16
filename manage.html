@@ -1,0 +1,388 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحة الإدارة - المنصة التعليمية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        secondary: '#1e40af',
+                        accent: '#3b82f6'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-8 w-full max-w-md fade-in">
+            <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">تسجيل الدخول للإدارة</h2>
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">رقم الهاتف</label>
+                    <input type="tel" id="phone" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="01040507023" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">كلمة المرور</label>
+                    <input type="password" id="password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="mh123466" required>
+                </div>
+                <button type="submit" class="w-full bg-primary text-white py-2 rounded-md hover:bg-secondary transition-colors">تسجيل الدخول</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="dashboard" class="hidden">
+        <!-- Header -->
+        <header class="bg-white shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-primary">لوحة تحكم الإدارة</h1>
+                <button id="logoutBtn" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors">
+                    <i class="fas fa-sign-out-alt ml-2"></i>تسجيل الخروج
+                </button>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto px-4 py-8">
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <div class="flex items-center">
+                        <div class="bg-blue-100 p-3 rounded-full">
+                            <i class="fas fa-users text-blue-600 text-xl"></i>
+                        </div>
+                        <div class="mr-4">
+                            <p class="text-gray-600">الطلاب المسجلين</p>
+                            <p id="studentCount" class="text-2xl font-bold">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <div class="flex items-center">
+                        <div class="bg-green-100 p-3 rounded-full">
+                            <i class="fas fa-file-alt text-green-600 text-xl"></i>
+                        </div>
+                        <div class="mr-4">
+                            <p class="text-gray-600">المحاضرات</p>
+                            <p id="lectureCount" class="text-2xl font-bold">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <div class="flex items-center">
+                        <div class="bg-purple-100 p-3 rounded-full">
+                            <i class="fas fa-key text-purple-600 text-xl"></i>
+                        </div>
+                        <div class="mr-4">
+                            <p class="text-gray-600">الأكواد النشطة</p>
+                            <p id="activeCodesCount" class="text-2xl font-bold">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Management Section -->
+            <div class="bg-white rounded-lg shadow mb-8">
+                <div class="p-6 border-b">
+                    <h2 class="text-xl font-bold text-gray-800">نشر المحتوى التعليمي</h2>
+                </div>
+                <div class="p-6">
+                    <form id="contentForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">نوع المحتوى</label>
+                            <select id="contentType" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="pdf">PDF / Word</option>
+                                <option value="image">صور</option>
+                                <option value="audio">تسجيلات صوتية</option>
+                                <option value="video">فيديوهات</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">عنوان المحتوى</label>
+                            <input type="text" id="contentTitle" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="أدخل عنوان المحتوى" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">تحميل الملف</label>
+                            <input type="file" id="contentFile" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" required>
+                        </div>
+                        <button type="submit" class="bg-primary text-white px-6 py-2 rounded-md hover:bg-secondary transition-colors">
+                            <i class="fas fa-upload ml-2"></i>نشر المحتوى
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Code Management Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <!-- Generate Code -->
+                <div class="bg-white rounded-lg shadow">
+                    <div class="p-6 border-b">
+                        <h2 class="text-xl font-bold text-gray-800">إدارة كود الدخول</h2>
+                    </div>
+                    <div class="p-6">
+                        <button id="generateCodeBtn" class="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 transition-colors mb-4">
+                            <i class="fas fa-plus ml-2"></i>إنشاء كود جديد
+                        </button>
+                        <div id="generatedCode" class="mt-4 hidden">
+                            <p class="text-sm text-gray-600 mb-2">كود الدخول المولد:</p>
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <input type="text" id="codeDisplay" class="flex-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-50" readonly>
+                                <button id="copyCodeBtn" class="bg-blue-500 text-white px-3 py-2 rounded-md hover:bg-blue-600">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Codes List -->
+                <div class="bg-white rounded-lg shadow">
+                    <div class="p-6 border-b">
+                        <h2 class="text-xl font-bold text-gray-800">الأكواد النشطة</h2>
+                    </div>
+                    <div class="p-6">
+                        <div id="activeCodesList" class="space-y-2">
+                            <p class="text-gray-500 text-center">لا توجد أكواد نشطة حالياً</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Requests Management Section -->
+            <div class="bg-white rounded-lg shadow">
+                <div class="p-6 border-b">
+                    <h2 class="text-xl font-bold text-gray-800">طلبات الأكواد</h2>
+                </div>
+                <div class="p-6">
+                    <div id="requestsTable" class="overflow-x-auto">
+                        <table class="w-full text-right">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">الاسم</th>
+                                    <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">الصف</th>
+                                    <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">الهاتف</th>
+                                    <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">البريد الإلكتروني</th>
+                                    <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">الحالة</th>
+                                    <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="requestsBody" class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td colspan="6" class="px-4 py-8 text-center text-gray-500">لا توجد طلبات حالياً</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Storage for data (in real application, this would be server-side)
+        let adminLoggedIn = false;
+        let students = JSON.parse(localStorage.getItem('students') || '[]');
+        let lectures = JSON.parse(localStorage.getItem('lectures') || '[]');
+        let accessCodes = JSON.parse(localStorage.getItem('accessCodes') || '[]');
+        let requests = JSON.parse(localStorage.getItem('requests') || '[]');
+
+        // DOM Elements
+        const loginModal = document.getElementById('loginModal');
+        const dashboard = document.getElementById('dashboard');
+        const loginForm = document.getElementById('loginForm');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const contentForm = document.getElementById('contentForm');
+        const generateCodeBtn = document.getElementById('generateCodeBtn');
+        const copyCodeBtn = document.getElementById('copyCodeBtn');
+        const codeDisplay = document.getElementById('codeDisplay');
+        const generatedCode = document.getElementById('generatedCode');
+        const activeCodesList = document.getElementById('activeCodesList');
+        const requestsBody = document.getElementById('requestsBody');
+        const studentCount = document.getElementById('studentCount');
+        const lectureCount = document.getElementById('lectureCount');
+        const activeCodesCount = document.getElementById('activeCodesCount');
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStats();
+            loadRequests();
+            loadActiveCodes();
+        });
+
+        // Login functionality
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+            
+            // Check credentials as specified
+            if (phone === '01040507023' && password === 'mh123466') {
+                adminLoggedIn = true;
+                loginModal.classList.add('hidden');
+                dashboard.classList.remove('hidden');
+                updateStats();
+            } else {
+                alert('بيانات الدخول غير صحيحة!');
+            }
+        });
+
+        // Logout functionality
+        logoutBtn.addEventListener('click', function() {
+            adminLoggedIn = false;
+            dashboard.classList.add('hidden');
+            loginModal.classList.remove('hidden');
+            loginForm.reset();
+        });
+
+        // Content upload functionality
+        contentForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const contentType = document.getElementById('contentType').value;
+            const contentTitle = document.getElementById('contentTitle').value;
+            const contentFile = document.getElementById('contentFile').files[0];
+            
+            if (contentFile) {
+                const lecture = {
+                    id: Date.now(),
+                    type: contentType,
+                    title: contentTitle,
+                    fileName: contentFile.name,
+                    date: new Date().toLocaleDateString('ar-EG')
+                };
+                lectures.push(lecture);
+                localStorage.setItem('lectures', JSON.stringify(lectures));
+                alert('تم نشر المحتوى بنجاح!');
+                contentForm.reset();
+                updateStats();
+            }
+        });
+
+        // Generate access code
+        generateCodeBtn.addEventListener('click', function() {
+            const code = 'EDU' + Math.random().toString(36).substr(2, 8).toUpperCase();
+            accessCodes.push({code: code, used: false, createdAt: new Date().toISOString()});
+            localStorage.setItem('accessCodes', JSON.stringify(accessCodes));
+            codeDisplay.value = code;
+            generatedCode.classList.remove('hidden');
+            updateStats();
+            loadActiveCodes();
+        });
+
+        // Copy code to clipboard
+        copyCodeBtn.addEventListener('click', function() {
+            codeDisplay.select();
+            document.execCommand('copy');
+            alert('تم نسخ الكود إلى الحافظة!');
+        });
+
+        // Update statistics
+        function updateStats() {
+            studentCount.textContent = students.length;
+            lectureCount.textContent = lectures.length;
+            activeCodesCount.textContent = accessCodes.filter(code => !code.used).length;
+        }
+
+        // Load active codes
+        function loadActiveCodes() {
+            const activeCodes = accessCodes.filter(code => !code.used);
+            if (activeCodes.length === 0) {
+                activeCodesList.innerHTML = '<p class="text-gray-500 text-center">لا توجد أكواد نشطة حالياً</p>';
+                return;
+            }
+            
+            activeCodesList.innerHTML = activeCodes.map(code => `
+                <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                    <span class="font-mono">${code.code}</span>
+                    <span class="text-sm text-gray-500">${new Date(code.createdAt).toLocaleDateString('ar-EG')}</span>
+                </div>
+            `).join('');
+        }
+
+        // Load requests
+        function loadRequests() {
+            if (requests.length === 0) {
+                requestsBody.innerHTML = '<tr><td colspan="6" class="px-4 py-8 text-center text-gray-500">لا توجد طلبات حالياً</td></tr>';
+                return;
+            }
+            
+            requestsBody.innerHTML = requests.map(req => `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">${req.name}</td>
+                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">${req.grade}</td>
+                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">${req.phone}</td>
+                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">${req.email}</td>
+                    <td class="px-4 py-3 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                            ${req.status === 'معلق' ? 'bg-yellow-100 text-yellow-800' : 
+                              req.status === 'تم القبول' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                            ${req.status}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
+                        ${req.status === 'معلق' ? 
+                            `<button class="text-green-600 hover:text-green-900 ml-2 accept-btn" data-id="${req.id}">قبول</button>
+                             <button class="text-red-600 hover:text-red-900 reject-btn" data-id="${req.id}">رفض</button>` : 
+                            `<span class="text-gray-500">-</span>`}
+                    </td>
+                </tr>
+            `).join('');
+            
+            // Add event listeners for accept/reject buttons
+            document.querySelectorAll('.accept-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const requestId = parseInt(this.getAttribute('data-id'));
+                    handleRequest(requestId, 'تم القبول');
+                });
+            });
+            
+            document.querySelectorAll('.reject-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const requestId = parseInt(this.getAttribute('data-id'));
+                    handleRequest(requestId, 'تم الرفض');
+                });
+            });
+        }
+
+        // Handle request acceptance/rejection
+        function handleRequest(requestId, status) {
+            const requestIndex = requests.findIndex(req => req.id === requestId);
+            if (requestIndex !== -1) {
+                requests[requestIndex].status = status;
+                
+                if (status === 'تم القبول') {
+                    // Generate a code for the accepted request
+                    const code = 'EDU' + Math.random().toString(36).substr(2, 8).toUpperCase();
+                    accessCodes.push({code: code, used: false, createdAt: new Date().toISOString(), email: requests[requestIndex].email});
+                    
+                    // In a real app, this would send an email
+                    alert(`تم قبول الطلب وإرسال الكود ${code} إلى البريد الإلكتروني ${requests[requestIndex].email}`);
+                }
+                
+                localStorage.setItem('requests', JSON.stringify(requests));
+                localStorage.setItem('accessCodes', JSON.stringify(accessCodes));
+                loadRequests();
+                updateStats();
+            }
+        }
+    </script>
+</body>
+</html>
+```
